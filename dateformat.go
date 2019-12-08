@@ -8,6 +8,11 @@ import (
 var days = [7]string{"dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"}
 var months = [12]string{"janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"}
 
+//GetFrenchMonth returns french month out of time.Month
+func GetFrenchMonth(month time.Month) string {
+	return months[int(month)-1]
+}
+
 //PrettyFrench takes a date and returns a string as follow "le lundi 01 janvier à 10h00"
 func PrettyFrench(date *time.Time) string {
 	return fmt.Sprintf("le %s %s %s à %sh%s",
@@ -37,11 +42,21 @@ func PrettyFrenchShort(date *time.Time) string {
 
 //French formats as follow " le 01/01/2019 à 09h00"
 func French(date *time.Time) string {
-	return fmt.Sprintf("le %02d/%02d/%d à %02dh00",
+	return fmt.Sprintf("le %02d/%02d/%d à %02dh%02d",
 		date.Day(),
 		date.Month(),
 		date.Year(),
-		date.Hour())
+		date.Hour(),
+		date.Minute(),
+	)
+}
+
+//FrenchShort formats as follow "01/01/2019"
+func FrenchShort(date *time.Time) string {
+	return fmt.Sprintf("%02d/%02d/%d",
+		date.Day(),
+		date.Month(),
+		date.Year())
 }
 
 //SetTime sets a date hour and minute based on a mn integer.
